@@ -5,7 +5,9 @@
             <!--1.0 左边菜单 -->
             <el-col :span="leftcol">
                 <!--<img src="../../../statics/imgs/logo.png" alt="">-->
+
                 <div class="layout menu">
+                    <h1>知识管理系统</h1>
                     <el-menu default-active="1-2" :collapse="iscollapse" class="el-menu-vertical-demo" >
                         <!--购物商城  -->
                         <el-submenu index="1">

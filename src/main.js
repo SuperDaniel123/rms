@@ -33,14 +33,14 @@ var router = new vueRouter({
 
 //axios使用
 //导入axios包
-//import axios from 'axios'
-//axios.defaults.baseURL = 'http://157.122.54.189:9095'
-////想要在将来的每个子组件中的方法中均可以使用this.$http去调用其方法执行ajax请求
-////绑定在vue原型的属性$http上
-//Vue.prototype.$http = axios
-//
-////绑定axios
-//Vue.use(axios);
+import axios from 'axios'
+axios.defaults.baseURL = 'http://157.122.54.189:9095'
+//想要在将来的每个子组件中的方法中均可以使用this.$http去调用其方法执行ajax请求
+//绑定在vue原型的属性$http上
+Vue.prototype.$http = axios
+
+//绑定axios
+Vue.use(axios);
 
 
 //导入element-ui

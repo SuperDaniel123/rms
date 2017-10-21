@@ -72,7 +72,7 @@ body{
 }
 
 .layout.menu{
-    min-height: 570px;
+    min-height: 745px;
     background-color: #267cb7;
     margin-top: -2px;
 }
@@ -102,7 +102,7 @@ a{
 /*列表页面开始*/
 
 .arttmpl{
-    margin:10px 10px 0 10px;
+    padding:10px 10px 0 10px;
 }
 
 .arttmpl .operation{
@@ -119,7 +119,7 @@ a{
 }
 
 .el-button.artlist.el-button--primary{
-    color:fff;
+    color:#fff;
 }
 
 .operation .el-col.el-col-20 button{
@@ -164,4 +164,8 @@ a{
     color:#2A72C5;
     font-size: 12px;
 
+}
+
+.searchInput{
+    float: right;
 }
