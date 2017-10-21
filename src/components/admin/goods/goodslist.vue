@@ -19,12 +19,14 @@
                 <el-col :span="8">
                     <!-- 新增，删除，全选按钮 -->
                     <el-button>全选</el-button>
-                    <el-button>新增</el-button>
+                    <router-link to="/admin/goodsAdd">
+                        <el-button>新增</el-button>
+                    </router-link>
                     <el-button>删除</el-button>
                 </el-col>
                 <el-col :span="4"  class="searchInput">
                     <!-- 搜索框 -->
-                    <el-input placeholder="请输入搜索条件" icon="search" v-model="searchValue" >
+                    <el-input placeholder="请输入搜索条件" icon="search" v-model="searchvalue" @change="getlist">
                     </el-input>
                 </el-col>
             </el-row>
@@ -33,29 +35,55 @@
         <!--列表-->
         <el-row>
             <el-col :span="24">
-                <el-table :data="list" style="width: 100%" :row-class-name="tableRowClassName">
-                    <el-table-column prop="date" label="全选" width="80" type="selection">
+                <el-table :data="list" style="width: 100%" @selection-change =
+                        "getRows" height="500">
+                    <el-table-column prop="date" label="全选" width="80" type="selection" >
                     </el-table-column>
                     <el-table-column prop="title" label="标题">
                     </el-table-column>
                     <el-table-column prop="categoryname" label="类别" width="100">
                     </el-table-column>
-                    <el-table-column label="发布人/发布时间"  width="150">
+                    <el-table-column label="发布人/发布时间" width="200">
                         <template scope="scope">
-                            {{scope.row.user_name }}  / {{scope.row.add_time}}
+                            {{scope.row.user_name }}  / {{scope.row.add_time | datefmt}}
                         </template>
                     </el-table-column>
                     <el-table-column prop="name" label="属性" width="100">
+                        <template scope = 'scope'>
+                            <el-tooltip class="item" effect="dark"
+                                        v-bind="{content:(scope.row.is_slide ==1?'显示轮播':'不显示轮播')}"
+                                        placement="bottom">
+                                <i v-bind="{class:'el-icon-picture '+(scope.row.is_slide == 1?'':'imgactive')}" ></i>
+                            </el-tooltip>
+
+                            <i v-bind="{class:'el-icon-upload '+(scope.row.is_slide == 1?'':'imgactive')}" ></i>
+                            <i v-bind="{class:'el-icon-star-on '+(scope.row.is_slide == 1?'':'imgactive')}" ></i>
+
+                        </template>
                     </el-table-column>
                     <el-table-column label="操作" width="80">
                         <template scope="scope">
-                            <a href="#">修改</a>
+                            <el-button type="success" size="mini">修改</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
             </el-col>
+
         </el-row>
-        
+        <el-row>
+            <el-col :span="24">
+                <el-pagination
+                        @size-change="sizeChange"
+                        @current-change="changePage"
+                        :current-page="currentPage"
+                        :page-sizes="[10,20,30,50]"
+                        :page-size="pageSize"
+                        layout="total, sizes, prev, pager, next, jumper"
+                        :total="total">
+                </el-pagination>
+            </el-col>
+        </el-row>
+
 
     </div>
 
@@ -67,24 +95,57 @@
     export default{
         data(){
         return {
-            searchValue:'',
-            list:[]
+            //选中id
+            ids : '',
+            //搜索属性
+            searchvalue:'',
+            //数据数组
+            list:[],
+            //显示每一页的条数
+            pageSize:10,
+            //当前第几页
+            currentPage:1,
+            //总条数
+            total:0
+
+
         }
     },
+
     created(){
         // 获取到列表数据
         this.getlist();
     },
     methods:{
+
+        sizeChange(currentSize){
+            this.pageSize = currentSize
+            this.getlist()
+        },
+        changePage(pageindex){
+            this.currentPage = pageindex
+            this.getlist()
+        },
+        //获取选中元素id
+        getRows(val){
+            this.ids = '';
+            var dot = ",";
+            for (var i = 0; i < val.length; i++){
+                if(i >= val.length - 1){
+                    dot = ""
+                }
+                this.ids += val[i].id + dot
+            }
+        },
         getlist(){
-            var url = '/admin/goods/getlist?pageIndex=1&pageSize=10&searchvalue='
+            var url = '/admin/goods/getlist?pageIndex='+this.currentPage+'&pageSize='+this.pageSize+'&searchvalue='+this.searchvalue
             this.$http.get(url).then(res=>{
                 if(res.data.status == 1){
                     this.$message.error(res.data.message);
                     return;
                 }
                 this.list = res.data.message
-                console.log(this.list)
+                this.total = res.data.totalcount
             })
         },
 

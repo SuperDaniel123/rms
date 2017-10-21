@@ -17,6 +17,7 @@ import layout from './components/admin/layout.vue'
 
 //导入goodslist.vue
 import goodslist from './components/admin/goods/goodslist.vue'
+import goodsAdd from './components/admin/goods/goodsAdd.vue'
 
 
 //配置路由
@@ -25,7 +26,8 @@ var router = new vueRouter({
     {name:'default',path:'/',redirect:'/admin'},
     {name:'layout',path:'/admin',component:layout,
       children:[
-        {name:goodslist,path:'goodslist',component:goodslist}
+        {name:goodslist,path:'goodslist',component:goodslist},
+        {name:goodsAdd,path:'goodsAdd',component:goodsAdd}
       ]
     }
   ]
@@ -56,6 +58,15 @@ import '../static/css/index.css'
 
 Vue.use(elementUi);
 /* eslint-disable no-new */
+Vue.filter('datefmt',(val)=>{
+  var mydate = new Date(val)
+  var y = mydate.getFullYear();
+  var m = mydate.getMonth() + 1;
+  var d = mydate.getDate();
+
+  return y + '-' + m + '-' + d
+
+})
 new Vue({
   el: '#app',
   router,

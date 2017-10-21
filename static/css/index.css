@@ -169,3 +169,7 @@ a{
 .searchInput{
     float: right;
 }
+
+.imgactive{
+    opacity: 0.6;
+}
