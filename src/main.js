@@ -12,6 +12,8 @@ Vue.use(vueRouter)
 //来关闭生产模式下给出的提示
 Vue.config.productionTip = false
 
+//登陆页面
+import  login from './components/admin/account/login.vue'
 //导入后台管理系统的整体布局组件
 import layout from './components/admin/layout.vue'
 
@@ -20,9 +22,11 @@ import goodslist from './components/admin/goods/goodslist.vue'
 import goodsAdd from './components/admin/goods/goodsAdd.vue'
 
 
+
 //配置路由
 var router = new vueRouter({
   routes:[
+    {name:'login',path:'/login',component:login},
     {name:'default',path:'/',redirect:'/admin'},
     {name:'layout',path:'/admin',component:layout,
       children:[
