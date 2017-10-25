@@ -30,8 +30,8 @@ var router = new vueRouter({
     {name:'default',path:'/',redirect:'/admin'},
     {name:'layout',path:'/admin',component:layout,
       children:[
-        {name:goodslist,path:'goodslist',component:goodslist},
-        {name:goodsAdd,path:'goodsAdd',component:goodsAdd}
+        {name:'goodslist',path:'goodslist',component:goodslist},
+        {name:'goodsAdd',path:'goodsAdd',component:goodsAdd}
       ]
     }
   ]
@@ -45,6 +45,7 @@ axios.defaults.baseURL = 'http://157.122.54.189:9095'
 //绑定在vue原型的属性$http上
 Vue.prototype.$http = axios
 
+axios.defaults.withCredentials = true;
 //绑定axios
 Vue.use(axios);
 
