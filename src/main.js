@@ -20,6 +20,7 @@ import layout from './components/admin/layout.vue'
 //µº»Îgoodslist.vue
 import goodslist from './components/admin/goods/goodslist.vue'
 import goodsAdd from './components/admin/goods/goodsAdd.vue'
+import goodsedit from './components/admin/goods/goodsedit.vue'
 
 
 
@@ -31,7 +32,8 @@ var router = new vueRouter({
     {name:'layout',path:'/admin',component:layout,
       children:[
         {name:'goodslist',path:'goodslist',component:goodslist},
-        {name:'goodsAdd',path:'goodsAdd',component:goodsAdd}
+        {name:'goodsAdd',path:'goodsAdd',component:goodsAdd},
+        {name:'goodsedit',path:'goodsedit/:id',component:goodsedit}
       ]
     }
   ]

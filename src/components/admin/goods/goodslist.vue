@@ -22,7 +22,7 @@
                     <router-link to="/admin/goodsAdd">
                         <el-button>新增</el-button>
                     </router-link>
-                    <el-button>删除</el-button>
+                    <el-button @click="deldata">删除</el-button>
                 </el-col>
                 <el-col :span="4"  class="searchInput">
                     <!-- 搜索框 -->
@@ -63,7 +63,9 @@
                     </el-table-column>
                     <el-table-column label="操作" width="80">
                         <template scope="scope">
-                            <el-button type="success" size="mini">修改</el-button>
+                            <router-link v-bind="{to:'/admin/goodsedit/'+scope.row.id}">
+                                <el-button type="success" size="mini">修改</el-button>
+                            </router-link>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -117,6 +119,28 @@
         this.getlist();
     },
     methods:{
+        deldata(){
+            if(this.ids.length<=0){
+                alert('请选勾选要删除的商品')
+                return
+            }
+            this.$confirm('真的要删除商品吗?','提示删除',{
+                confirmButtonText:'确定',
+                cancelButtonText:'取消',
+                type:'warning'
+            }).then(()=> {
+                this.$http.get('/admin/goods/del/'+this.ids)
+                        .then(res=>{
+                    if(res.data.message ==1){
+                        console.log('error')
+                        return
+                    }
+                    alert('删除成功')
+                    this.getlist()
+                })
+            })
+        .catch(_ => {});
+        },
 
         sizeChange(currentSize){
             this.pageSize = currentSize
